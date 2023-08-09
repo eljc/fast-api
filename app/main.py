@@ -2,9 +2,10 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.routers import user, auth, post
+import uvicorn
 
 app = FastAPI()
-
+# https://codevoweb.com/restful-api-with-python-fastapi-access-and-refresh-tokens/
 origins = [
     settings.CLIENT_ORIGIN,
 ]
@@ -25,3 +26,7 @@ app.include_router(post.router, tags=["Posts"], prefix="/api/posts")
 @app.get("/api/healthchecker")
 def root():
     return {"message": "Hello World"}
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
